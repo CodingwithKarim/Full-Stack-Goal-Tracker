@@ -1,0 +1,42 @@
+body {
+  color:black;
+  background-image: url("img/todo.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.list-group-item {
+
+  word-wrap: break-word;
+  background-color: aliceblue;
+}
+
+.messages {
+  width: 40%;
+  margin-left: 29%;
+}
+
+.page-header{
+    border: none;
+}
+
+.btn{
+  border: 1px solid crimson;
+  background-color: transparent;
+}
+
+.success{
+  text-decoration: line-through;
+}
+
+.hide{
+  display: none;
+}
+
+.try{
+  margin-right: 3%;
+}
+
+

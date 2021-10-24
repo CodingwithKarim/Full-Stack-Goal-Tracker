@@ -1,7 +1,22 @@
 body{
   padding-top:80px;
   word-wrap:break-word;
+  
 }
 img{
   height: 200px;
 }
+
+.jumbotron{
+  background-color: #1B1B1B;
+
+}
+
+.jumbotron h1{
+  color:white;
+}
+
+.jumbotron p {
+  color: white;
+}
+

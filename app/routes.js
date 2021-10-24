@@ -1,13 +1,21 @@
 module.exports = function(app, passport, db) {
+  //app is express dependency in server js, passport is dependecny in server js, db is database that is connected from server js
 
 // normal routes ===============================================================
 
     // show the home page (will also have our login links)
+    //renders the index.ejs file
     app.get('/', function(req, res) {
         res.render('index.ejs');
     });
 
+    app.get('/boot', function(req, res) {
+      res.render('boot.ejs');
+  });
+
     // PROFILE SECTION =========================
+    //renders the profile.ejs if /profile is requested
+    //finding database collection and returns as array
     app.get('/profile', isLoggedIn, function(req, res) {
         db.collection('messages').find().toArray((err, result) => {
           if (err) return console.log(err)
@@ -26,28 +34,73 @@ module.exports = function(app, passport, db) {
 
 // message board routes ===============================================================
 
-    app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
-        if (err) return console.log(err)
-        console.log('saved to database')
-        res.redirect('/profile')
-      })
-    })
+  
 
-    app.put('/messages', (req, res) => {
+    app.post("/messages", (req, res) => {
+      console.log(req.body);
       db.collection('messages')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+        .insertOne(req.body)
+        .then((result) => {
+          console.log(result);
+          res.redirect("/profile");
+        })
+        .catch((error) => console.error(error));
+    });
+
+    app.put("/messages", (req, res) => {
+      console.log(req.body);
+      db.collection('messages')
+        .findOneAndUpdate(
+          { _id: new ObjectID(req.body._id) },
+          {
+            $set: {
+              name: req.body.name,
+              quote: req.body.quote,
+            },
+          },
+          {
+            upsert: false,
+          }
+        )
+        .then((result) => {
+          console.log(result);
+          res.status(200).send('OK')
+        })
+        .catch((error) => console.error(error));
+    });
+
+
+    app.put('/completed', (req, res) => {
+      db.collection('messages')
+      .findOneAndUpdate({date: req.body.date, task: req.body.task}, {
         $set: {
-          thumbUp:req.body.thumbUp + 1
+          date : req.body.filter,
+          task : req.body.filter1
+
         }
       }, {
         sort: {_id: -1},
-        upsert: true
+        upsert: false
       }, (err, result) => {
         if (err) return res.send(err)
         res.send(result)
       })
     })
+
+    // app.put('/thumbDown', (req, res) => {
+    //   db.collection('messages')
+    //   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    //     $set: {
+    //       thumbUp: req.body.thumbUp - 1 
+    //     }
+    //   }, {
+    //     sort: {_id: -1},
+    //     upsert: true
+    //   }, (err, result) => {
+    //     if (err) return res.send(err)
+    //     res.send(result)
+    //   })
+    // })
 
     app.delete('/messages', (req, res) => {
       db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
@@ -55,6 +108,22 @@ module.exports = function(app, passport, db) {
         res.send('Message deleted!')
       })
     })
+
+    app.delete('/filter', (req, res) => {
+      db.collection('messages').remove({}, (err, result) => {
+        if (err) return res.send(500, err)
+        res.send('Message deleted!')
+      })
+    })
+    
+    app.delete('/filter1', (req, res) => {
+      db.collection('messages').remove({name:req.body.name}, (err, result) => {
+        if (err) return res.send(500, err)
+        res.send('Message deleted!')
+      })
+    })
+
+
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -110,6 +179,5 @@ module.exports = function(app, passport, db) {
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
-
     res.redirect('/');
 }
