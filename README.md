@@ -1,13 +1,2 @@
-## Installation
-
-1. Clone repo
-2. run `npm install`
-
-## Usage
-
-1. run `node server.js`
-2. Navigate to `localhost:8080`
-
-## Credit
-
-Modified from Scotch.io's auth tutorial
+## Fullstack Goal Tracker with authentication built using Node, Express, MongoDB
+<p align="center"><img src="public/img/goalspic.png" height=300px></p>
