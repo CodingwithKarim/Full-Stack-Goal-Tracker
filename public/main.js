@@ -12,10 +12,10 @@ counter.innerText = `${toDoList.length}`;
 Array.from(check).forEach(function (element) {
   console.log("wow");
   element.addEventListener("click", function () {
-    console.log(this.parentNode.parentNode.childNodes[0]);
+    console.log(this.parentNode.parentNode.childNodes);
     const name = this.parentNode.parentNode.childNodes[1].value;
-    const msg = this.parentNode.parentNode.childNodes[5].value;
-    const _id = this.parentNode.parentNode.childNodes[11].innerText;
+    const msg = this.parentNode.parentNode.childNodes[3].value;
+    const _id = this.parentNode.parentNode.childNodes[9].innerText;
     fetch("messages", {
       method: "put",
       headers: { "Content-Type": "application/json" },
@@ -25,9 +25,6 @@ Array.from(check).forEach(function (element) {
         _id: _id,
       }),
     })
-      .then((response) => {
-        if (response.ok) return response.json();
-      })
       .then((data) => {
         console.log(data);
         window.location.reload(true);
@@ -35,45 +32,45 @@ Array.from(check).forEach(function (element) {
   });
 });
 
-Array.from(check).forEach(function (element) {
-  element.addEventListener("click", function () {
-    console.log("Hello");
-    console.log(this.parentNode.parentNode.childNodes);
+// Array.from(check).forEach(function (element) {
+//   element.addEventListener("click", function () {
+//     console.log("Hello");
+//     console.log(this.parentNode.parentNode.childNodes);
 
-    const name = this.parentNode.parentNode.childNodes[1].innerText;
-    const msg = this.parentNode.parentNode.childNodes[3].innerText;
-    const date = this.parentNode.parentNode.childNodes[1];
-    const filter = date.classList.add("success");
-    const task = this.parentNode.parentNode.childNodes[3];
-    const filter1 = task.classList.add("success");
+//     const name = this.parentNode.parentNode.childNodes[1].innerText;
+//     const msg = this.parentNode.parentNode.childNodes[3].innerText;
+//     const date = this.parentNode.parentNode.childNodes[1];
+//     const filter = date.classList.add("success");
+//     const task = this.parentNode.parentNode.childNodes[3];
+//     const filter1 = task.classList.add("success");
 
-    fetch("completed", {
-      method: "put",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: name,
-        msg: msg,
-        filter: filter,
-        date: date,
-        task: task,
-        filter1: filter1,
-      }),
-    })
-      .then((response) => {
-        if (response.ok) return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        // window.location.reload(true);
-      });
-  });
-});
+//     fetch("completed", {
+//       method: "put",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         name: name,
+//         msg: msg,
+//         filter: filter,
+//         date: date,
+//         task: task,
+//         filter1: filter1,
+//       }),
+//     })
+//       .then((response) => {
+//         if (response.ok) return response.json();
+//       })
+//       .then((data) => {
+//         console.log(data);
+//         // window.location.reload(true);
+//       });
+//   });
+// });
 
 Array.from(trash).forEach(function (element) {
   element.addEventListener("click", function () {
     console.log(this.parentNode.parentNode.childNodes)
-    const name = this.parentNode.parentNode.childNodes[3].innerText;
-    const msg = this.parentNode.parentNode.childNodes[5].innerText;
+    const name = this.parentNode.parentNode.childNodes[5].innerText;
+    const msg = this.parentNode.parentNode.childNodes[7].innerText;
 
     fetch("messages", {
       method: "delete",

@@ -47,6 +47,8 @@ module.exports = function(app, passport, db) {
         .catch((error) => console.error(error));
     });
 
+    const ObjectID = require('mongodb').ObjectId
+
     app.put("/messages", (req, res) => {
       console.log(req.body);
       db.collection('messages')
@@ -55,7 +57,7 @@ module.exports = function(app, passport, db) {
           {
             $set: {
               name: req.body.name,
-              quote: req.body.quote,
+              msg: req.body.msg,
             },
           },
           {

@@ -28,13 +28,12 @@
         <% if (user.local.email) { %>
           <section style="width: 100%; display: flex; margin-left: 33%;">
           <form action="/messages" method="POST">
-            <input type="date" name="name" placeholder="Input Character">
-            <input type="text" placeholder="Input Task" name="msg">
+            <input type="date" name="name">
+            <input type="text" placeholder="Input Goal" name="msg">
             <button type="submit" class="btn btn-outline-primary">Submit</button>
           </form>
         <% } %>
       
-        <button class="fas fa-filter btn btn-outline-primary" ></button>
         <button class="fas fa-radiation-alt test btn btn-outline-primary"></i></button>
         <button class = 'btn btn-outline-primary' id = 'countBtn'></button>
           </section>
@@ -45,11 +44,8 @@
           <% for(var i=0; i<messages.length; i++) {%>
             
             <li class= "list-group-item d-flex justify-content-between align-items-start" style="list-style-type: none;">
-                <form>
                 <input type="date" name = 'name'>
-                <button style="display: inline-block;" class="updateBtn" type="submit">Update</button>
                 <input style="margin-right: 14%;" type = 'text' name="msg" class = 'input2'>
-                </form>
               <span class="try"><%= messages[i].name %></span>
               <span class="try"><%= messages[i].msg %></span>
               <span class="try hide"><%= messages[i]._id %></span>
